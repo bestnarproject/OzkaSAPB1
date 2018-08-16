@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "adminlte", "adminlte\adminlte.csproj", "{137833FC-20C9-455B-9E2D-A7F562820336}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzkaSAPB1", "adminlte\OzkaSAPB1.csproj", "{137833FC-20C9-455B-9E2D-A7F562820336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A9AEA27-265B-4431-9080-2CA260F70E5E}
 	EndGlobalSection
 EndGlobal

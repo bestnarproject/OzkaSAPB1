@@ -12,9 +12,6 @@ namespace adminlte.Models
 {
   public class KalemlerDataAccessLayer
   {
-    string connectionString = "Data Source=localhost;Initial Catalog=SBODemoTR;User ID=sa;Password=1";
-
-    //To View all employees details    
     public IEnumerable<Kalemler> GetAllKalemler()
     {
       List<Kalemler> lstKalem = new List<Kalemler>();
