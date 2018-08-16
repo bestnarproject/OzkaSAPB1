@@ -1,0 +1,176 @@
+﻿@model IEnumerable<adminlte.Models.Kalemler>
+  @{
+    ViewBag.Title = "Kalem Ana Verileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+  }
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Kalemler
+        <small>Kalem Ana Verileri</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Kalemler</a></li>
+        <li class="active">Kalem Ana Verileri</li>
+      </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container">
+        <br />
+        <div style="width:90%; margin:0 auto;">
+            <!--
+          <p>
+            <a asp-action="Create">Create New</a>
+          </p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  @Html.DisplayNameFor(model => model.ItemCode)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(model => model.ItemName)
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var item in Model)
+              {
+                <tr>
+                  <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                  </td>
+                  <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                  </td>
+                  <td>
+                    <a asp-action="Edit" asp-route-id="@item.ItemCode">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ItemCode">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ItemCode">Delete</a>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+            @Html.DevExpress().GridView(
+                 settings =>
+                 {
+                     settings.Name = "StokGridView";
+                     settings.CallbackRouteValues = new { Controller = "Kalemler", Action = "Index" };
+                     settings.Width = 450;
+
+                     settings.Columns.Add("ItemCode").SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+                     settings.Columns.Add("ItemName");
+                 }).Bind(Model).GetHtml()
+        </div>
+  <!-- /.content-wrapper -->
+  @section Scripts
+{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#demoGrid").DataTable({
+
+          "processing": true, // for show progress bar
+          "serverSide": true, // for process server side
+          "filter": true, // this is for disable filter (search box)
+          "orderMulti": false, // for disable multiple column at once
+          "pageLength": 5,
+
+          "ajax": {
+            "url": "/Kalemler/LoadData",
+            "type": "POST",
+            "datatype": "json"
+          },
+
+          "columnDefs":
+            [{
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+            },
+            {
+              "targets": [7],
+              "searchable": false,
+              "orderable": false
+            },
+            {
+              "targets": [8],
+              "searchable": false,
+              "orderable": false
+            },
+            {
+              "targets": [9],
+              "searchable": false,
+              "orderable": false
+            }],
+
+          "columns": [
+            { "data": "ItemCode", "name": "ItemCode", "autoWidth": true },
+            { "data": "ItemName", "name": "ItemName", "autoWidth": true },
+
+            {
+              "render": function (data, type, full, meta) {
+                return '<a class="btn btn-info" href="/Kalemler/Edit/' + full.ItemCode + '">Edit</a>';
+              }
+            },
+
+            {
+              data: null, render: function (data, type, row) {
+                return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.ItemCode + "'); >Delete</a>";
+              }
+            },
+
+          ]
+
+        });
+      });
+    </script>
+
+    <script>
+
+    function DeleteData(ItemCode) {
+            if (confirm("Are you sure you want to delete ...?")) {
+              Delete(ItemCode);
+            }
+            else {
+                return false;
+            }
+        }
+
+
+    function Delete(ItemCode) {
+            var url = '@Url.Content("~/")' + "Kalemler/DeleteCustomer";
+            $.post(url, { ID: CustomerID }, function (data) {
+                if (data == "Deleted") {
+                    alert("Delete Customer !");
+                    oTable = $('#demoGrid').DataTable();
+                    oTable.draw();
+                }
+                else {
+                    alert("Something Went Wrong!");
+                }
+            });
+        }
+    </script>
+
+  }
+
+
